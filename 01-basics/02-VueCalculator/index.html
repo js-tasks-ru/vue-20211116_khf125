@@ -37,22 +37,10 @@
         <div class="col"
              style="display: flex; flex-direction: column; font-family: emoji"
         >
-          <label><input type="radio" value="sum"
-                        :checked="operation === 'sum'"
-                        @change="operation = $event.target.value"
-          /> ➕</label>
-          <label><input type="radio" value="subtract"
-                        :checked="operation === 'subtract'"
-                        @change="operation = $event.target.value"
-          /> ➖</label>
-          <label><input type="radio" value="multiply"
-                        :checked="operation === 'multiply'"
-                        @change="operation = $event.target.value"
-          /> ✖</label>
-          <label><input type="radio" value="divide"
-                        :checked="operation === 'divide'"
-                        @change="operation = $event.target.value"
-          /> ➗</label>
+          <label><input type="radio" value="sum" v-model="operation"/> ➕</label>
+          <label><input type="radio" value="subtract" v-model="operation"/> ➖</label>
+          <label><input type="radio" value="multiply" v-model="operation"/> ✖</label>
+          <label><input type="radio" value="divide" v-model="operation"/> ➗</label>
         </div>
 
         <div class="col">
