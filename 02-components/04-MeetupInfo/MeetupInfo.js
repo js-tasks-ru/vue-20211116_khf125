@@ -26,21 +26,24 @@ export default defineComponent({
         day: 'numeric',
       });
     },
+    formatAsIsoDate(timestamp) {
+      return new Date(timestamp).toISOString().split('T')[0];
+    },
   },
 
   template: `
     <ul class="meetup-info">
     <li>
-      <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-user.svg"/>
+      <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-user.svg" />
       {{ organizer }}
     </li>
     <li>
-      <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-map.svg"/>
+      <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-map.svg" />
       {{ place }}
     </li>
     <li>
-      <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg"/>
-      <time datetime="2020-01-01">{{ formatAsLocalDate(date) }}</time>
+      <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
+      <time :datetime="formatAsIsoDate(date)">{{ formatAsLocalDate(date) }}</time>
     </li>
     </ul>`,
 });
