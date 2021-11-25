@@ -1,4 +1,4 @@
-import meetups from './api/meetups.js';
+import meetups from '../api/meetups.js';
 
 /**
  * Получение данных митапа по Meetup ID с API

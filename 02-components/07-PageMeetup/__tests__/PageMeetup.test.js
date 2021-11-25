@@ -1,9 +1,9 @@
 jest.mock(global.getSolutionPath('vendor/vue.esm-browser.js'), () => require('vue'));
-jest.mock('../meetupService');
+jest.mock('../components/meetupService');
 
-const { default: PageMeetupTest } = require(global.getSolutionPath('PageMeetup'));
-const meetupService = require(global.getSolutionPath('meetupService'));
-import { mount, flushPromises } from '@vue/test-utils';
+const { default: PageMeetupTest } = require(global.getSolutionPath('components/PageMeetup'));
+const meetupService = require(global.getSolutionPath('components/meetupService'));
+import { flushPromises, mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 import meetups from './__fixtures__/meetups';
 
