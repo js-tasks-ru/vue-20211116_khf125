@@ -1,73 +1,45 @@
 <template>
-  <div class="toasts">
-    <div class="toast toast_success">
-      <ui-icon class="toast__icon" icon="check-circle" />
-      <span>Success Toast Example</span>
-    </div>
-
-    <div class="toast toast_error">
-      <ui-icon class="toast__icon" icon="alert-circle" />
-      <span>Error Toast Example</span>
-    </div>
-  </div>
+  <ui-toast-list :toasts="toasts" />
 </template>
 
 <script>
-import UiIcon from './UiIcon';
+import UiToastList from './UiToastList';
+
+const TOAST_TIMEOUT = 5000;
 
 export default {
   name: 'TheToaster',
 
-  components: { UiIcon },
+  components: { UiToastList },
+
+  data() {
+    return {
+      toasts: new Set(),
+    };
+  },
+
+  methods: {
+    add(message, type, timeout) {
+      const toast = {
+        message: message,
+        type: type,
+      };
+      this.toasts.add(toast);
+      setTimeout(() => {
+        this.remove(toast);
+      }, timeout || TOAST_TIMEOUT);
+    },
+    remove(toast) {
+      this.toasts.delete(toast);
+    },
+    success(message, timeout) {
+      this.add(message, 'success', timeout);
+    },
+    error(message, timeout) {
+      this.add(message, 'error', timeout);
+    },
+  },
 };
 </script>
 
-<style scoped>
-.toasts {
-  position: fixed;
-  bottom: 8px;
-  right: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  white-space: pre-wrap;
-  z-index: 999;
-}
-
-@media all and (min-width: 992px) {
-  .toasts {
-    bottom: 72px;
-    right: 112px;
-  }
-}
-
-.toast {
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: row;
-  align-items: center;
-  padding: 16px;
-  background: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-  font-size: 18px;
-  line-height: 28px;
-  width: auto;
-}
-
-.toast + .toast {
-  margin-top: 20px;
-}
-
-.toast__icon {
-  margin-right: 12px;
-}
-
-.toast.toast_success {
-  color: var(--green);
-}
-
-.toast.toast_error {
-  color: var(--red);
-}
-</style>
+<style scoped></style>
