@@ -1,4 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
+
 const UiInput = require(global.getSolutionPath('components/UiInput.vue')).default;
 
 const findInput = (wrapper) => wrapper.find('input,textarea');
@@ -117,7 +118,6 @@ describe('wrappers/UiInput', () => {
       expect(findInput(wrapper).element === document.activeElement).toBeTruthy();
     });
 
-    /*
     describe('Дополнительная часть - модификатор lazy', () => {
       it('UiInput не должен обновлять значение модели в процессе ввода с модификатором lazy', async () => {
         const modelValue = 'SampleText';
@@ -138,6 +138,5 @@ describe('wrappers/UiInput', () => {
         expect(wrapper.emitted('update:modelValue')[0]).toEqual([modelValue]);
       });
     });
-    */
   });
 });

@@ -1,13 +1,31 @@
 <template>
-  <div class="input-group input-group_icon input-group_icon-left input-group_icon-right">
-    <div class="input-group__icon">
-      <img class="icon" alt="icon" />
+  <div
+    class="input-group"
+    :class="{
+      'input-group_icon': withIcons,
+      'input-group_icon-left': withLeftIcon,
+      'input-group_icon-right': withRightIcon,
+    }"
+  >
+    <div v-if="withLeftIcon" class="input-group__icon">
+      <slot name="left-icon" />
     </div>
 
-    <input ref="input" class="form-control form-control_rounded form-control_sm" />
+    <component
+      :is="tag"
+      ref="input"
+      :value="modelValue"
+      v-bind="$attrs"
+      class="form-control"
+      :class="{
+        'form-control_rounded': rounded,
+        'form-control_sm': small,
+      }"
+      @[typeEvent]="updateEvent"
+    />
 
-    <div class="input-group__icon">
-      <img class="icon" alt="icon" />
+    <div v-if="withRightIcon" class="input-group__icon">
+      <slot name="right-icon" />
     </div>
   </div>
 </template>
@@ -15,6 +33,66 @@
 <script>
 export default {
   name: 'UiInput',
+
+  inheritAttrs: false,
+
+  props: {
+    modelValue: {
+      type: String,
+    },
+    modelModifiers: {
+      default: () => ({}),
+    },
+    small: {
+      type: Boolean,
+    },
+    rounded: {
+      type: Boolean,
+    },
+    multiline: {
+      type: Boolean,
+    },
+  },
+
+  emits: ['update:modelValue'],
+
+  expose: ['focus'],
+
+  computed: {
+    tag() {
+      return this.multiline ? 'textarea' : 'input';
+    },
+
+    withIcons() {
+      return this.withLeftIcon || this.withRightIcon;
+    },
+
+    withLeftIcon() {
+      return this.withIcon('left');
+    },
+
+    withRightIcon() {
+      return this.withIcon('right');
+    },
+
+    typeEvent() {
+      return this.modelModifiers.lazy ? 'change' : 'input';
+    },
+  },
+
+  methods: {
+    focus() {
+      this.$refs['input'].focus();
+    },
+
+    withIcon(side) {
+      return !!this.$slots[`${side}-icon`];
+    },
+
+    updateEvent($event) {
+      this.$emit('update:modelValue', $event.target.value);
+    },
+  },
 };
 </script>
 
